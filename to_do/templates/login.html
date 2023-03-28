@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
+
+{% block title %}
+    Login
+{% endblock %}
+
+{% block body %}
+    <section class="container">
+        <div class="login">
+            <h1>User authorization</h1>
+            <form method="post" action="">
+                <p><input type="text" name="username" value="" placeholder="Username"></p>
+                <p><input type="password" name="password" value="" placeholder="Password"></p>
+                <p class="remember_me">
+                    <label>
+                        <input type="checkbox" name="remember_me" id="remember_me">
+                        Remember me on this computer
+                    </label>
+                </p>
+                <p class="submit"><input type="submit" name="commit" value="Login"></p>
+            </form>
+            <div class="login-help">
+                <a href="#"><p>Need an account?</p></a>
+            </div>
+        </div>
+    </section>
+{% endblock %}
