@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block css %}
+    {#    <link rel="stylesheet" href="{% static 'css/base.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
 {% endblock %}
 
@@ -12,21 +13,66 @@
 {% block body %}
     <section class="container">
         <div class="login">
-            <h1>User registration</h1>
+            <h1>
+                User registration
+            </h1>
             <form method="post" action="">
-                <p><input type="text" name="username" placeholder="Username">
+                {% csrf_token %}
+                <div class="form-error">
+                    {{ form.non_field_errors }}
+                </div>
+                <p>
+                    <input type="text" name="username" placeholder="Username" id="id_username">
+                    <label for="id_username" class="form-error">
+                    </label>
                 </p>
-                <p><input type="text" name="email" placeholder="Email"></p>
-                <p><input type="text" name="first_name"
-                          placeholder="First_name"></p>
-                <p><input type="text" name="last_name"
-                          placeholder="Last_name"></p>
-                <p><input type="password" name="password1"
-                          placeholder="Password"></p>
-                <p><input type="password" name="password2"
-                          placeholder="Repeat the password">
+                <div class="form-error">
+                    {{ form.username.errors }}
+                </div>
+                <p>
+                    <input type="text" name="email" placeholder="Email" id="id_email">
+                    <label for="id_email" class="form-error">
+                    </label>
                 </p>
-                <p class="submit"><input type="submit" name="commit" value="Registration"></p>
+                <div class="form-error">
+                    {{ form.email.errors }}
+                </div>
+                <p>
+                    <input type="text" name="first_name" placeholder="First_name" id="id_first_name">
+                    <label for="id_first_name" class="form-error">
+                    </label>
+                </p>
+                <div class="form-error">
+                    {{ form.first_name.errors }}
+                </div>
+                <p>
+                    <input type="text" name="last_name" placeholder="Last_name" id="id_last_name">
+                    <label for="id_last_name" class="form-error">
+                    </label>
+                </p>
+                <div class="form-error">
+                    {{ form.last_name.errors }}
+                </div>
+                <p>
+                    <input type="password" name="password1" placeholder="Password" id="id_password1">
+                    <label for="id_password1" class="form-error">
+                    </label>
+                </p>
+                <div class="form-error">
+                    {{ form.password1.errors }}
+                </div>
+                <p>
+                    <input type="password" name="password2" placeholder="Repeat the password" id="id_password2">
+                    <label for="id_password2"></label>
+                </p>
+                <div class="form-error">
+                    {{ form.password2.errors }}
+                </div>
+                <p class="submit">
+                    <a href="{% url 'login' %}">
+                        <input type="submit" name="commit" value="Registration">
+                    </a>
+                </p>
             </form>
         </div>
     </section>
