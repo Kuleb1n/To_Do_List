@@ -53,8 +53,8 @@ h1 {
     margin: 1rem;
     height: 2.5rem;
     text-align: center;
-    width: 60% &: focus;
-    outline: solid #b2975d;
+    width: 90%;
+    outline: solid #b2975d 2px;
     transition: 0.1s;
 }
 
@@ -96,8 +96,7 @@ h1 {
 }
 
 .wrapper {
-    padding-bottom: 5px;
-    min-height: 100px;
+    min-height: 65px;
 }
 
 .task {
@@ -116,8 +115,8 @@ header {
 
 .todo-input {
     font-size: 1rem;
-    border: none;
     background: #fff;
+    border: 2px #000000 solid;
 }
 
 .todo-input:hover {
@@ -129,14 +128,13 @@ header {
     font-size: 1rem;
     border: none;
     background: #fff;
-    outline: solid #000000;
+    outline: solid #000000 2px;
 }
 
 .image {
     color: #000000;
     background: springgreen;
     cursor: pointer;
-    border-radius: 25%;
 }
 
 .image:hover {
@@ -159,20 +157,24 @@ header {
     color: #ff0099;
 }
 
-div.wrapper {
-    min-height: 150px;
-}
-
-div.left_block {
+.left_block {
     float: left;
     max-width: 250px;
     font-size: 100%;
     text-align: justify;
 }
 
-.html-teg {
+div.left_block-tr {
     float: left;
+    max-width: 250px;
+    font-size: 100%;
+    text-align: justify;
+    color: #000000;
+    text-decoration: line-through;
+}
 
+.html-teg {
+    text-align: left;
 }
 
 div.right_block {
@@ -180,7 +182,6 @@ div.right_block {
     padding-right: 3px;
     padding-top: 4px;
 }
-
 
 div.right_block a {
     text-decoration: none;
