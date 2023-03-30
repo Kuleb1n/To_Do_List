@@ -10,61 +10,108 @@
 {% endblock %}
 
 {% block body %}
-    <a href="">
-        <button class="Logout">Logout</button>
+    <a href="{% url 'logout' %}">
+        <button class="Logout">
+            Logout
+        </button>
     </a>
     <div class="content">
-        <h1> My to do list </h1>
-        <div id="app-list" class="list">
-            <input class="input" type="text" placeholder="Введите название таска">
-            <button class="btn btn-add">
-                Add task
-            </button>
-        </div>
+        <h1>
+            My to do list
+        </h1>
+        <form action="" method="post">
+            {% csrf_token %}
+            <div id="app-list" class="list">
+                                <label for="id_title"></label>
+                <input class="input" type="text" name="title" maxlength="25" id="id_title"
+                       placeholder="Введите название таска">
+                <label for="id_user"></label>
+                <select name="user" required="" id="id_user" hidden="hidden">
+                    <option value="{{ request.user.pk }}" hidden="hidden">
+                        {{ request.user }}
+                    </option>
+                </select>
+                <button class="btn btn-add" type="submit">
+                    Add task
+                </button>
+            </div>
+        </form>
     </div>
-
     <div class="task-container">
-        <div class="task">
-            <header>
-                <h2>Lockdown Todo List</h2>
-                <a href="#" class="basket">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                         class="bi bi-trash3" viewBox="0 0 16 16">
-                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5
+        {% for i in to_do_list %}
+            {% if i.user.pk == request.user.pk %}
+                <div class="task">
+                    <header>
+                        <h2>
+                            {{ i.title }}
+                        </h2>
+                        <a href="{% url 'to-do-list-delete' i.pk %}" class="basket">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                 class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5
     0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885
     16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1
     0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5
     5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.
     5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
-                    </svg>
-                </a>
-            </header>
-            <form method="post" action="">
-                <input type="text" class="todo-input" placeholder="Введите пункт"/>
-                <button type="submit" class="image">
-                    &#10010;
-                </button>
-            </form>
-            <br>
-            <div class="records">
-                <div>Records:</div>
-            </div>
-            <div class="wrapper">
-                <div class="html-teg">&#9997;</div>
-                <div class="left_block">
-                    ewrtwet erwtewt trewtt rewtrt erwt
+                            </svg>
+                        </a>
+                    </header>
+                    <form method="post" action="{% url 'add-record' %}">
+                        {% csrf_token %}
+                        <label for="id_record_title"></label>
+                        <input type="text" name="record_title" maxlength="45" required="" id="id_record_title"
+                               class="todo-input" placeholder="Введите пункт"/>
+                        <label for="id_status"></label>
+                        <input type="checkbox" name="status" id="id_status" hidden="hidden">
+                        <select name="title" required="" id="id_title" hidden="hidden">
+                            <option value="{{ i.pk }}" hidden="hidden">
+                                {{ i }}
+                            </option>
+                        </select>
+                        <button type="submit" class="image">
+                            &#10010;
+                        </button>
+                    </form>
+                    <br>
+                    <div class="records">
+                        <div>Records:</div>
+                    </div>
+                    <div class="wrapper">
+                        {% for record in records %}
+                            {% if record.title == i %}
+                                <div class="html-teg">
+                                    &#9997;
+                                </div>
+                                {% if record.status == False %}
+                                    <div class="left_block">
+                                        {{ record.record_title }}
+                                    </div>
+                                {% else %}
+                                    <div class="left_block-tr">
+                                        {{ record.record_title }}
+                                    </div>
+                                {% endif %}
+                                <div class="right_block">
+                                    {% if record.status == False %}
+                                        <a href="{% url 'record_update' record.pk %}">
+                                            <input type="button" value="✔️" title="Add Task" class="input-update">
+                                        </a>
+                                    {% else %}
+                                        <span class="tick">	&#10004;</span>
+                                    {% endif %}
+                                    <a href="{% url 'record-delete' record.pk %}">
+                                        <input type="button" value="❌" title="Remove Task" class="input-delete">
+                                    </a>
+                                </div>
+                                <br>
+                                <br>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
                 </div>
-                <div class="right_block">
-                    <a href="">
-                        <input type="button" value="✔️" title="Add Task" class="input-update">
-                    </a>
-                    <a href="">
-                        <input type="button" value="❌" title="Remove Task" class="input-delete">
-                    </a>
-                </div>
-                <br>
-                <br>
-            </div>
-        </div>
+            {% endif %}
+        {% endfor %}
     </div>
+
 {% endblock %}
