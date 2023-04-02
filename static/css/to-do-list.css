@@ -195,6 +195,32 @@ div.right_block a {
     background: red;
 }
 
+div.pagination {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+
+.link-pagination {
+    text-decoration: none;
+    border: #F7797D 2px solid;
+    padding: 7px 7px;
+    border-radius: 30%;
+    color: #7600ff;
+}
+
+.link-pagination:hover {
+    border: #F7797D 2px solid;
+    color: #000000;
+    background: #F7797D;
+}
+
+.link-pagination:active {
+    border: #5600ff 2px solid;
+    color: #000000;
+    background: #5600ff;
+}
+
 @media (max-width: 1100px) {
 
     .task-container {
