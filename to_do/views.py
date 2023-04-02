@@ -28,6 +28,7 @@ class UserCreateView(CreateView):
 class ToDoListView(CreateView, ListView):
     model = ToDoListTitle
     template_name = 'to-do-list.html'
+    paginate_by = 3
     form_class = ToDiListCreateForm
     context_object_name = 'to_do_list'
     success_url = reverse_lazy('to-do-list')
