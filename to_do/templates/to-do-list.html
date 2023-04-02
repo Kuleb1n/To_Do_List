@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block css %}
+    {#    <link rel="stylesheet" href="{% static 'css/to-do-list.css' %}">#}
     <link rel="stylesheet" href="{% static 'css/to-do-list.css' %}">
 {% endblock %}
 
@@ -22,7 +23,7 @@
         <form action="" method="post">
             {% csrf_token %}
             <div id="app-list" class="list">
-                                <label for="id_title"></label>
+                <label for="id_title"></label>
                 <input class="input" type="text" name="title" maxlength="25" id="id_title"
                        placeholder="Введите название таска">
                 <label for="id_user"></label>
@@ -113,5 +114,24 @@
             {% endif %}
         {% endfor %}
     </div>
+    <div class="pagination">
+        {% if page_obj.has_other_pages %}
+            {% if page_obj.has_previous %}
+                <a class="link-pagination" href="?page={{ page_obj.paginator.num_page }}">First</a>
+                <a class="link-pagination" href="?page={{ page_obj.previous_page_number }}">&laquo</a>
+            {% endif %}
+            {% for p in paginator.page_range %}
+                {% if page_obj.number == p %}
+                    <span class="page-link">{{ p }}</span>
+                {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                    <a class="link-pagination" class="page-link" href="?page={{ p }}">{{ p }}</a>
+                {% endif %}
+            {% endfor %}
 
+            {% if page_obj.has_next %}
+                <a class="link-pagination" href="?page={{ page_obj.next_page_number }}">&raquo</a>
+                <a class="link-pagination" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+            {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}
