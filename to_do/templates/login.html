@@ -11,6 +11,13 @@
 
 {% block body %}
     <section class="container">
+        <div class="messages">
+            {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+            {% endif %}
+        </div>
         <div class="login">
             <h1>
                 User authorization
