@@ -1,5 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, ListView
@@ -16,10 +17,11 @@ class UserLoginView(LoginView):
         return reverse('to-do-list')
 
 
-class UserCreateView(CreateView):
+class UserCreateView(SuccessMessageMixin, CreateView):
     template_name = 'registration.html'
     model = User
     form_class = UserRegistrationForm
+    success_message = 'You have successfully registered!'
 
     def get_success_url(self):
         return reverse('login')
