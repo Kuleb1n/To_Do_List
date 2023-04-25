@@ -1,3 +1,13 @@
 from django.test import TestCase
 
-# Create your tests here.
+
+class UserLoginViewTestCase(TestCase):
+    pass
+
+
+class UserRegistrationViewTestCase(TestCase):
+    pass
+
+
+class UserCreateViewTestCase(TestCase):
+    pass
